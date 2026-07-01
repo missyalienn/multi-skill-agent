@@ -1,3 +1,4 @@
+# Archived pre-restructure; not maintained.
 """
 A completely different business use case (sales lead enrichment instead of
 vendor risk), built with zero changes to core/. This is the proof that the

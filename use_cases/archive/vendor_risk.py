@@ -1,3 +1,4 @@
+# Archived pre-restructure; not maintained.
 from enum import Enum
 from typing import Optional
 
