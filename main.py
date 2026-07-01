@@ -9,12 +9,12 @@ import importlib
 import json
 import sys
 
-from core.graph import build_graph
+from core.workflow import build_graph
 from core.contracts import GraphState
 
 
-def run(domain_name: str, target: str) -> None:
-    domain_module = importlib.import_module(f"domains.{domain_name}")
+def run(use_case_name: str, target: str) -> None:
+    domain_module = importlib.import_module(f"use_cases.{use_case_name}")
     config = domain_module.config
 
     app = build_graph(config)
@@ -35,7 +35,8 @@ def run(domain_name: str, target: str) -> None:
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print('Usage: python main.py <domain> "Target"')
-        print("Available domains: vendor_risk, lead_enrichment")
+        print('Usage: python main.py <use_case> "Target"')
+        print("Available use cases: vendor_risk, lead_enrichment")
         sys.exit(1)
     run(sys.argv[1], " ".join(sys.argv[2:]))
+

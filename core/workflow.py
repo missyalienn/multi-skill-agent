@@ -1,15 +1,15 @@
 """
 Builds the search -> extract -> validate -> (retry | end) graph for any
-DomainConfig. This file is identical for every use case.
+UseCaseConfig. This file is identical for every use case.
 """
+import langgraph.graph as graph  
+from langgraph.graph import StateGraph, END 
 
-from langgraph.graph import StateGraph, END
-
-from core.contracts import DomainConfig, GraphState
+from core.contracts import UseCaseConfig, GraphState
 from core.nodes import make_search_node, make_extract_node, make_validate_node, route_after_validate
 
 
-def build_graph(config: DomainConfig):
+def build_graph(config: UseCaseConfig):
     graph = StateGraph(GraphState)
 
     graph.add_node("search", make_search_node(config))

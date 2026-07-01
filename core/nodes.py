@@ -1,6 +1,6 @@
 """
 The engine. These three functions never change between use cases --
-they're parameterized entirely by the DomainConfig passed in at build time.
+they're parameterized entirely by the UseCaseConfig passed in at build time.
 """
 
 import json
@@ -8,7 +8,7 @@ import os
 
 import anthropic
 
-from core.contracts import DomainConfig, GraphState
+from core.contracts import UseCaseConfig, GraphState
 
 _client = None
 
@@ -20,7 +20,7 @@ def get_client() -> anthropic.Anthropic:
     return _client
 
 
-def make_search_node(config: DomainConfig):
+def make_search_node(config: UseCaseConfig):
     def search_node(state: GraphState) -> dict:
         client = get_client()
         prompt = config.search_prompt(state.target, state.search_query)
@@ -38,7 +38,7 @@ def make_search_node(config: DomainConfig):
     return search_node
 
 
-def make_extract_node(config: DomainConfig):
+def make_extract_node(config: UseCaseConfig):
     def extract_node(state: GraphState) -> dict:
         client = get_client()
         schema_json = json.dumps(config.output_schema.model_json_schema(), indent=2)
@@ -62,7 +62,7 @@ def make_extract_node(config: DomainConfig):
     return extract_node
 
 
-def make_validate_node(config: DomainConfig):
+def make_validate_node(config: UseCaseConfig):
     def validate_node(state: GraphState) -> dict:
         retry_count = state.retry_count
 

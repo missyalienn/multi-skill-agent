@@ -1,6 +1,6 @@
 """
 The generic contract. Any business use case plugs into this loop by
-providing a DomainConfig -- nothing in core/ changes between use cases.
+providing a UseCaseConfig -- nothing in core/ changes between use cases.
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ class GraphState(BaseModel):
 
 
 @dataclass
-class DomainConfig:
+class UseCaseConfig:
     """Everything that varies between use cases. This is the only file
     you write to adapt the framework to a new business problem."""
 
