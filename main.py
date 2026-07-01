@@ -14,8 +14,8 @@ from core.contracts import GraphState
 
 
 def run(use_case_name: str, target: str) -> None:
-    domain_module = importlib.import_module(f"use_cases.{use_case_name}")
-    config = domain_module.config
+    use_case_module = importlib.import_module(f"use_cases.{use_case_name}")
+    config = use_case_module.config
 
     app = build_graph(config)
     initial_state = GraphState(target=target)
