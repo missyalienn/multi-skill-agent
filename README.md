@@ -1,4 +1,4 @@
-# Agent Framework
+# Multi-Skill Agent Framework
 
 A reusable agentic engine, built around three pieces: a domain-agnostic
 search → extract → validate → retry loop, a `DomainConfig` adapter pattern
