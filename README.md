@@ -1,22 +1,23 @@
 # Multi-Skill Agent Framework
 
 A reusable agentic engine, built around three pieces: a domain-agnostic
-search → extract → validate → retry loop, a `DomainConfig` adapter pattern
+search → extract → validate → retry loop, a `UseCaseConfig` adapter pattern
 so new business use cases are a single config file (not a rewrite), and
 Semantic Tool Selection for routing between multiple tools.
 
 ## Structure
 
 - `core/` — the engine. Never changes between use cases.
-  - `contracts.py` — `GraphState`, `DomainConfig`
+  - `contracts.py` — `GraphState`, `UseCaseConfig`
   - `nodes.py` — generic search/extract/validate node implementations
-  - `graph.py` — LangGraph wiring with the self-correcting retry edge
+  - `workflow.py` — LangGraph wiring with the self-correcting retry edge
   - `tools.py` — `ToolSpec`, `ToolCategory` (hand-crafted / API-based / plug-in)
   - `tool_router.py` — Semantic Tool Selection (see below)
-- `domains/` — business use cases, each a config file: schema + prompts + validation rule
-  - `vendor_risk.py`
-  - `lead_enrichment.py`
-- `main.py` — CLI: `python main.py <domain> "<target>"`
+- `use_cases/` — business use cases, each a config file: schema + prompts + validation rule
+  - No active use cases currently. `vendor_risk.py` and `lead_enrichment.py` are
+    archived in `use_cases/archive/` pending the core/capability restructure
+    (see `docs/plans/core-architecture-audit-plan.md`).
+- `main.py` — CLI: `python main.py <use_case> "<target>"`
 - `demo_tool_router.py` — standalone, runnable, zero-API-key demo of tool routing
 
 ## Semantic Tool Selection (core/tool_router.py)
@@ -44,6 +45,16 @@ third example query in the demo output). Production should swap in a
 real embedding model (Voyage AI — Anthropic's recommended partner — or
 OpenAI/Cohere embeddings) behind the same `Embedder` interface; nothing
 else in `ToolRouter` changes.
+
+## Tracing (LangSmith)
+
+Set these in `.env` to trace every run in LangSmith — no code changes required:
+
+```bash
+LANGSMITH_TRACING=true
+LANGSMITH_API_KEY=ls__...
+LANGSMITH_PROJECT=multi-skill-agent   # optional
+```
 
 ## Next steps (not yet built)
 

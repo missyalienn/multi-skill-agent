@@ -9,6 +9,10 @@ import importlib
 import json
 import sys
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from core.workflow import build_graph
 from core.contracts import GraphState
 
@@ -36,7 +40,7 @@ def run(use_case_name: str, target: str) -> None:
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print('Usage: python main.py <use_case> "Target"')
-        print("Available use cases: vendor_risk, lead_enrichment")
+        print("No active use cases yet. See smoke_test.py to exercise core/ directly.")
         sys.exit(1)
     run(sys.argv[1], " ".join(sys.argv[2:]))
 

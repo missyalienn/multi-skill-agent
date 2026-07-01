@@ -28,7 +28,6 @@ def make_search_node(config: UseCaseConfig):
         response = client.messages.create(
             model=config.model,
             max_tokens=2000,
-            tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=[{"role": "user", "content": prompt}],
         )
         text = "\n".join(b.text for b in response.content if b.type == "text").strip()
